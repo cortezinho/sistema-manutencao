@@ -1,10 +1,10 @@
-package br.com.aweb.sistema_vendas;
+package br.com.aweb.sistema_manutencao;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SistemaVendasApplicationTests {
+class SistemaManutencaoApplicationTests {
 
 	@Test
 	void contextLoads() {
