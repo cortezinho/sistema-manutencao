@@ -13,7 +13,8 @@
     <h1 class="mb-4 fw-bold">Lista de Manutenções</h1>
 
     <form class="d-flex mb-3" th:action="@{/manutencao/procurar}" method="get">
-      <input class="form-control form-control-lg me-2 rounded-pill shadow-sm" type="search" name="titulo" placeholder="Buscar por manutenção">
+      <input class="form-control form-control-lg me-2 rounded-pill shadow-sm" type="search" name="titulo"
+        placeholder="Buscar por manutenção">
       <button class="btn btn-primary btn-lg rounded-pill shadow-sm" type="submit">Buscar</button>
     </form>
 
@@ -28,38 +29,49 @@
           <th>Descrição</th>
           <th>Criado em</th>
           <th>Finalizado em</th>
+          <th>Urgência</th>
           <th>Ações</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="fs-5 fw-bold">
         <tr th:each="manut : ${manuts}">
           <th th:text="${manut.id}">---</th>
           <td th:text="${manut.titulo}">---</td>
           <td th:text="${manut.nome}">---</td>
           <td th:text="${manut.descricao}">---</td>
           <td th:text="${#temporals.format(manut.criadoEm)}">---</td>
-          <td th:text="${#temporals.format(manut.finalizadoEm) ?: '-'}">---</td>
-          <td class="d-flex gap-2">
-            <form th:action="@{/manutencao/finalizar/{id}(id=${manut.id})}" method="post">
-              <button type="submit" class="btn btn-success btn-sm rounded-pill"
+          <td th:text="${manut.finalizadoEm != null ? #temporals.format(manut.finalizadoEm) : '-'}">---</td>
+          <td>
+            <span th:text="${manut.urgente} ? 'Urgente' : 'Não Urgente'"
+              th:classappend="${manut.urgente} ? 'badge bg-danger' : 'badge bg-success'">
+            </span>
+          </td>
+          <td class="d-flex flex-column justify-content-center gap-2">
+            <form th:action="@{/manutencao/finalizar/{id}(id=${manut.id})}" method="post" class="w-100">
+              <button type="submit" class="btn btn-success btn-sm rounded-pill w-100"
                 th:classappend="${manut.finalizadoEm} ?'disabled':''">
                 Concluir
               </button>
             </form>
 
-            <a th:href="@{/manutencao/editar/{id}(id=${manut.id})}" 
-              class="btn btn-warning btn-sm text-white rounded-pill"
+            <a th:href="@{/manutencao/editar/{id}(id=${manut.id})}"
+              class="btn btn-warning btn-sm text-white rounded-pill w-100"
               th:classappend="${manut.finalizadoEm} ?'disabled':''">Editar</a>
 
-            <a th:href="@{/manutencao/deletar/{id}(id=${manut.id})}" class="btn btn-danger btn-sm rounded-pill">Excluir</a>
+            <a th:href="@{/manutencao/deletar/{id}(id=${manut.id})}"
+              class="btn btn-danger btn-sm rounded-pill w-100">Excluir</a>
           </td>
+
         </tr>
       </tbody>
     </table>
 
-    <p th:if="${#lists.isEmpty(manuts)}" class="bg-danger bg-opacity-60 text-white p-2 rounded">Nenhuma Tarefa Cadastrada</p>
+    <p th:if="${#lists.isEmpty(manuts)}" class="bg-danger bg-opacity-60 text-white p-2 rounded text-center fw-bold">
+      Nenhuma Tarefa Cadastrada
+    </p>
 
     <a th:href="@{manutencao/criar}" class="btn btn-primary btn-lg rounded-pill shadow">Nova Tarefa</a>
   </main>
 </body>
+
 </html>

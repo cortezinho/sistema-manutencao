@@ -45,9 +45,6 @@ public class Manut {
     @Column(nullable = false, length = 100)
     private String descricao;
 
-    // @NotNull
-    // @FutureOrPresent
-    // @DateTimeFormat(iso = ISO.DATE)
-    // @Column(nullable = false)
-    // private LocalDate deadline;
+    @Column(nullable = false)
+    private Boolean urgente = false;
 }
